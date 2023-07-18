@@ -3,10 +3,10 @@ import domain.Employee;
 import java.sql.*;
 import java.util.*;
 public class EmployeeFunctionService {
-    public Employee getEmployeeByID(int ID) throws ClassNotFoundException{
+    public static Employee getEmployeeByID(int ID) throws ClassNotFoundException{
         try {
             Connection connection = DBConnectionService.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Employee WHERE ID = ?");
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM employees WHERE ID = ?");
             preparedStatement.setInt(1, ID);
             ResultSet resultSet = preparedStatement.executeQuery();
             Employee employee = new Employee();
@@ -23,10 +23,10 @@ public class EmployeeFunctionService {
         }
         return null;
     }
-    public Employee getEmployeeByName(String name) throws ClassNotFoundException{
+    public static Employee getEmployeeByName(String name) throws ClassNotFoundException{
         try {
             Connection connection = DBConnectionService.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Employee WHERE name = ?");
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM employees WHERE name = ?");
             preparedStatement.setString(1, name);
             ResultSet resultSet = preparedStatement.executeQuery();
             Employee employee = new Employee();
@@ -46,7 +46,7 @@ public class EmployeeFunctionService {
     public static void addEmployee(Employee employee) throws ClassNotFoundException{
         try {
             Connection connection = DBConnectionService.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT IGNORE INTO Employee (name, ID, age, salary) VALUES (?, ?, ?, ?)");
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT IGNORE INTO employees (name, ID, age, salary) VALUES (?, ?, ?, ?)");
             preparedStatement.setString(1, employee.getName());
             preparedStatement.setInt(2, employee.getID());
             preparedStatement.setInt(3, employee.getAge());
@@ -58,24 +58,24 @@ public class EmployeeFunctionService {
             e.printStackTrace();
         }
     }
-    public void updateEmployeeByID(int id) throws ClassNotFoundException{
+    public static void updateEmployeeByID(Employee employee) throws ClassNotFoundException{
         try {
             Connection connection = DBConnectionService.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE Employee SET name = ?, age = ?, salary = ? WHERE ID = ?");
-            preparedStatement.setString(1, "Hassan");
-            preparedStatement.setInt(2, 20);
-            preparedStatement.setDouble(3, 100000);
-            preparedStatement.setInt(4, id);
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE employees SET name = ?, age = ?, salary = ? WHERE ID = ?");
+            preparedStatement.setString(1, employee.getName());
+            preparedStatement.setInt(2, employee.getAge());
+            preparedStatement.setBigDecimal(3, employee.getSalary());
+            preparedStatement.setInt(4, employee.getID());
             preparedStatement.executeUpdate();
         }
         catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    public void deleteEmployeeByID(int ID) throws ClassNotFoundException{
+    public static void deleteEmployeeByID(int ID) throws ClassNotFoundException{
         try {
             Connection connection = DBConnectionService.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM Employee WHERE ID = ?");
+            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM employees WHERE ID = ?");
             preparedStatement.setInt(1, ID);
             preparedStatement.executeUpdate();
         }
@@ -87,7 +87,7 @@ public class EmployeeFunctionService {
     public static List<Employee> getAllEmployees() throws ClassNotFoundException{
         try {
             Connection connection = DBConnectionService.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Employee");
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM employees");
             ResultSet resultSet = preparedStatement.executeQuery();
             List<Employee> employees = new ArrayList<>();
             while (resultSet.next()) {
