@@ -1,7 +1,11 @@
-package services;
-import domain.Employee;
-import java.sql.*;
-import java.util.*;
+package com.services;
+import com.domain.Employee;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 public class EmployeeFunctionService {
     public static Employee getEmployeeByID(int ID) throws ClassNotFoundException{
         try {
@@ -92,8 +96,9 @@ public class EmployeeFunctionService {
             List<Employee> employees = new ArrayList<>();
             while (resultSet.next()) {
                 Employee employee = new Employee();
-                employee.setName(resultSet.getString("name"));
                 employee.setID(resultSet.getInt("ID"));
+                employee.setName(resultSet.getString("name"));
+
                 employee.setAge(resultSet.getInt("age"));
                 employee.setSalary(resultSet.getBigDecimal("salary"));
                 employees.add(employee);

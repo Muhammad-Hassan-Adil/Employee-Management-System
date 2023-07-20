@@ -1,5 +1,6 @@
-package domain;
+package com.domain;
 import java.math.BigDecimal;
+
 public class Employee {
     private String name;
     private int ID,age;
@@ -16,6 +17,9 @@ public class Employee {
     }
     public int getID() {
         return ID;
+    }
+    public String getIDString() {
+        return Integer.toString(ID);
     }
     public int getAge() {
         return age;
