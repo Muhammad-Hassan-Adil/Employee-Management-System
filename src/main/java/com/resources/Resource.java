@@ -21,7 +21,7 @@ public class Resource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String createNewMovieEntry(String employee) throws ClassNotFoundException{
+    public String createEmployee(String employee) throws ClassNotFoundException{
         logger.info("Kesa hai");
         Employee employee1 = new Gson().fromJson(employee, Employee.class);
         logger.info(employee1.getIDString());
@@ -33,7 +33,7 @@ public class Resource {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
-    public String changeMovieEntry(String employee) throws ClassNotFoundException{
+    public String changeEmployeeData(String employee) throws ClassNotFoundException{
         Employee employee1 = new Gson().fromJson(employee, Employee.class);
         EmployeeFunctionService.updateEmployeeByID(employee1);
         return employee;
@@ -41,8 +41,11 @@ public class Resource {
 
     @DELETE
     @Produces(MediaType.TEXT_PLAIN)
-    public String deleteMovieEntry(String id) throws ClassNotFoundException {
-        EmployeeFunctionService.deleteEmployeeByID(Integer.parseInt(id));
+    public String deleteMovie(String id) throws ClassNotFoundException {
+        System.out.println(id);
+        int i = new Gson().fromJson(id, Integer.class);
+        System.out.println(i);
+        EmployeeFunctionService.deleteEmployeeByID(i);
         return id;
     }
 }

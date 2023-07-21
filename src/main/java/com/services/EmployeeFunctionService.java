@@ -82,6 +82,7 @@ public class EmployeeFunctionService {
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM employees WHERE ID = ?");
             preparedStatement.setInt(1, ID);
             preparedStatement.executeUpdate();
+            System.out.println("Employee with ID " + ID + " deleted.");
         }
         catch (SQLException e) {
             e.printStackTrace();
