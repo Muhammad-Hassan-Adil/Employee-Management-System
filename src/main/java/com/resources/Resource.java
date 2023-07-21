@@ -41,7 +41,7 @@ public class Resource {
 
     @DELETE
     @Produces(MediaType.TEXT_PLAIN)
-    public String deleteMovie(String id) throws ClassNotFoundException {
+    public String deleteEmployee(String id) throws ClassNotFoundException {
         System.out.println(id);
         int i = new Gson().fromJson(id, Integer.class);
         System.out.println(i);
