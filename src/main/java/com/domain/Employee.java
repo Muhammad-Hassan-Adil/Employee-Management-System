@@ -18,6 +18,8 @@ public class Employee {
     public int getID() {
         return ID;
     }
+    public String getSalaryString() {return salary.toString();}
+    public String getAgeString() {return Integer.toString(age);}
     public String getIDString() {
         return Integer.toString(ID);
     }

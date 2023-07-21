@@ -39,7 +39,6 @@ public class AuthService implements ContainerRequestFilter {
     private boolean isAuthenticated(String username, String password) {
         try {
             Connection connection = DBConnectionService.getConnection();
-            System.out.println("Connected");
             // Prepare the SQL statement to query the users table
             String sql = "SELECT COUNT(*) FROM Users WHERE username = ? AND password = ?";
             PreparedStatement statement = connection.prepareStatement(sql);

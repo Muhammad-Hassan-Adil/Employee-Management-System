@@ -30,25 +30,19 @@ public class Resource {
         return employee;
     }
 
-//    @PUT
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    @Produces(MediaType.TEXT_PLAIN)
-//    public String changeMovieEntry(String payLoad){
-//        boolean context = App.changeMovieEntryInDatabase(payLoad);
-//        if(context)
-//            return Response.ok("Successfully Changed!",MediaType.TEXT_PLAIN).build().toString();
-//        return Response.notModified("The movie could not be changed ").build().toString();
-//    }
-//
-//    @DELETE
-//    @Path("/{id}")
-//    @Produces(MediaType.TEXT_PLAIN)
-//    public String deleteMovieEntry(@PathParam("id") int movieId) {
-//        boolean context = App.deleteMovieEntryFromDatabase(movieId);
-//        if (context) {
-//            return Response.ok("Successfully Deleted!", MediaType.TEXT_PLAIN).build().toString();
-//        } else {
-//            return Response.status(Response.Status.NOT_FOUND).build().toString();
-//        }
-//    }
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
+    public String changeMovieEntry(String employee) throws ClassNotFoundException{
+        Employee employee1 = new Gson().fromJson(employee, Employee.class);
+        EmployeeFunctionService.updateEmployeeByID(employee1);
+        return employee;
+    }
+
+    @DELETE
+    @Produces(MediaType.TEXT_PLAIN)
+    public String deleteMovieEntry(String id) throws ClassNotFoundException {
+        EmployeeFunctionService.deleteEmployeeByID(Integer.parseInt(id));
+        return id;
+    }
 }
