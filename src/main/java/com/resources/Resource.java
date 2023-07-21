@@ -43,7 +43,8 @@ public class Resource {
     @Produces(MediaType.TEXT_PLAIN)
     public String deleteEmployee(String id) throws ClassNotFoundException {
         System.out.println(id);
-        int i = new Gson().fromJson(id, Integer.class);
+        Employee employee1 = new Gson().fromJson(id, Employee.class);
+        int i = employee1.getID();
         System.out.println(i);
         EmployeeFunctionService.deleteEmployeeByID(i);
         return id;
