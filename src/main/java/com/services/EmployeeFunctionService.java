@@ -1,11 +1,8 @@
 package com.services;
 import com.domain.Employee;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.*;
+import java.util.*;
+
 public class EmployeeFunctionService {
     public static Employee getEmployeeByID(int ID) throws ClassNotFoundException{
         try {
@@ -20,6 +17,7 @@ public class EmployeeFunctionService {
                 employee.setAge(resultSet.getInt("age"));
                 employee.setSalary(resultSet.getBigDecimal("salary"));
             }
+            connection.close();
             return employee;
         }
         catch (SQLException e) {
@@ -40,6 +38,7 @@ public class EmployeeFunctionService {
                 employee.setAge(resultSet.getInt("age"));
                 employee.setSalary(resultSet.getBigDecimal("salary"));
             }
+            connection.close();
             return employee;
         }
         catch (SQLException e) {
@@ -71,6 +70,7 @@ public class EmployeeFunctionService {
             preparedStatement.setBigDecimal(3, employee.getSalary());
             preparedStatement.setInt(4, employee.getID());
             preparedStatement.executeUpdate();
+            connection.close();
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -82,7 +82,7 @@ public class EmployeeFunctionService {
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM employees WHERE ID = ?");
             preparedStatement.setInt(1, ID);
             preparedStatement.executeUpdate();
-            System.out.println("Employee with ID " + ID + " deleted.");
+            connection.close();
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -99,11 +99,11 @@ public class EmployeeFunctionService {
                 Employee employee = new Employee();
                 employee.setID(resultSet.getInt("ID"));
                 employee.setName(resultSet.getString("name"));
-
                 employee.setAge(resultSet.getInt("age"));
                 employee.setSalary(resultSet.getBigDecimal("salary"));
                 employees.add(employee);
             }
+            connection.close();
             return employees;
         }
         catch (SQLException e) {

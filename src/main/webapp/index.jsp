@@ -3,11 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <title>Employee Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 20px;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin: 20px auto;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        th:nth-child(1), td:nth-child(1) { width: 10%; }
+        th:nth-child(2), td:nth-child(2) { width: 30%; }
+        th:nth-child(3), td:nth-child(3) { width: 15%; }
+        th:nth-child(4), td:nth-child(4) { width: 25%; }
+        form {
+            margin: 20px auto;
+            max-width: 400px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        input[type="text"] {
+            width: 95%;
+            padding: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button[type="submit"] {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+        }
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
 <h1>Employee Management System</h1>
 <h2>Total Employees</h2>
-<div id="jsonDataSection"></div>
+<div id="jsonDataSection">
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Salary</th>
+        </tr>
+        </thead>
+        <tbody id="employeeTableBody">
+        <!-- Employee data will be added dynamically here -->
+        </tbody>
+    </table>
+</div>
 <form id="employeeForm">
     <h2>Add Employee</h2>
     <label for="ID">ID:</label>
@@ -42,12 +115,30 @@
     function getUsers(){
         fetch('api/restfullapp')
             .then(response => response.json())
-            .then(data => {const employeeList = document.getElementById('jsonDataSection');
-                employeeList.innerHTML = '';
+            .then(data => {
+                const employeeTableBody = document.getElementById('employeeTableBody');
+                employeeTableBody.innerHTML = '';
+
                 data.forEach(employee => {
-                    const div = document.createElement('div');
-                    div.textContent = employee.ID + ' ' + employee.name + ' ' + employee.age + ' ' + employee.salary;
-                    employeeList.appendChild(div);
+                    const row = document.createElement('tr');
+
+                    const idCell = document.createElement('td');
+                    idCell.textContent = employee.ID;
+                    row.appendChild(idCell);
+
+                    const nameCell = document.createElement('td');
+                    nameCell.textContent = employee.name;
+                    row.appendChild(nameCell);
+
+                    const ageCell = document.createElement('td');
+                    ageCell.textContent = employee.age;
+                    row.appendChild(ageCell);
+
+                    const salaryCell = document.createElement('td');
+                    salaryCell.textContent = employee.salary;
+                    row.appendChild(salaryCell);
+
+                    employeeTableBody.appendChild(row);
                 });
             })
             .catch(error => console.error("Error fetching data: ", error));
@@ -73,7 +164,6 @@
             },
             body: JSON.stringify(data),
         })
-            .then(response => response.json())
             .then(data => {
                 console.log('Employee added successfully: ',data);
                 form.reset();
@@ -102,7 +192,6 @@
             },
             body: JSON.stringify(data),
         })
-            .then(response => response.json())
             .then(data => {
                 console.log('Employee updated successfully: ',data);
                 form.reset();
@@ -125,7 +214,6 @@
             },
             body: JSON.stringify(data),
         })
-            .then(response => response.json())
             .then(data => {
                 console.log('Employee deleted successfully: ',data);
                 form.reset();
