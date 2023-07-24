@@ -15,6 +15,7 @@ public class Servlet extends HttpServlet {
             throws ServletException, IOException {
         String path = request.getRequestURI().substring(request.getContextPath().length());
         logger.info("path: " + path);
+        System.out.println("path: " + request.getServletPath());
         request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
 }
